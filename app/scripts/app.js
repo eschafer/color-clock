@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-angular.module('colorClockApp', [])
+angular.module("colorClockApp", [])
 	.config(function ($routeProvider) {
 		$routeProvider
-			.when('/', {
-				templateUrl: 'views/main.html',
-				controller: 'MainCtrl'
+			.when("/", {
+				templateUrl: "views/main.html",
+				controller: "MainCtrl"
 			})
 			.otherwise({
-				redirectTo: '/'
+				redirectTo: "/"
 			});
 	});
