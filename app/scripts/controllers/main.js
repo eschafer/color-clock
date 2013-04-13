@@ -62,9 +62,9 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 				break;
 		}
 
-		red = Math.floor(red * .8);
-		green = Math.floor(green * .8);
-		blue = Math.floor(blue * .8);
+		red = Math.floor(red * 0.8);
+		green = Math.floor(green * 0.8);
+		blue = Math.floor(blue * 0.8);
 
 		return "rgb(" + red + ", " + green + ", " + blue + ")";
 	}
