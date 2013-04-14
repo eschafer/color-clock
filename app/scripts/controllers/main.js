@@ -1,30 +1,39 @@
 "use strict";
 
 angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeout) {
+
+	// 256 * 6
 	var COLORS_PER_CYCLE = 1536;
+
+	// 12 hours
 	var SECONDS_PER_CYCLE = 43200;
-	var now = new Date();
-	var then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
-	$scope.date = now;
-	$scope.color = getColorString(getColorNumber(now, then));
-
+	// Runs the timeout function the first time, and then runs it again
+	// each time `date` is updated.
 	$scope.$watch("date", function() {
 		$timeout(function() {
-			var now = new Date();
-			var colorNumber = getColorNumber(now, then);
+			var currentDate = new Date();
+			var colorNumber = getColorNumber(currentDate);
 			var color = getColorString(colorNumber);
 
-			$scope.date = now;
+			$scope.date = currentDate;
 			$scope.color = color;
 		}, 1000);
 	});
 
-	function getColorNumber(now, then) {
-		var secondsSinceMidnight = (now.getTime() - then.getTime()) / 1000;
-		return Math.round((secondsSinceMidnight + 21600) % SECONDS_PER_CYCLE);
+	// Returns an integer that will be used to determine the background color,
+	// based on the current time.
+	function getColorNumber(currentDate) {
+		var startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), 0, 0, 0);
+		var secondsSinceMidnight = (currentDate.getTime() - startDate.getTime()) / 1000;
+
+		// The offset is used to change the start color.
+		var offset = 21600;
+
+		return Math.round((secondsSinceMidnight + offset) % SECONDS_PER_CYCLE);
 	}
 
+	// Returns an rgb() string that will be used in an inline style.
 	function getColorString(colorNumber) {
 		var secondsPerColor = SECONDS_PER_CYCLE / COLORS_PER_CYCLE;
 		var remainder = (colorNumber / secondsPerColor) % 256;
