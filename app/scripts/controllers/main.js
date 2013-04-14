@@ -2,12 +2,13 @@
 
 angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeout) {
 	var COLORS_PER_CYCLE = 1536;
-	var SECONDS_PER_CYCLE = 3600;
+	var SECONDS_PER_CYCLE = 43200;
 	var now = new Date();
 	var then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
 	$scope.date = now;
 	$scope.color = getColorString(getColorNumber(now, then));
+	console.log($scope.color);
 
 	$scope.$watch("date", function() {
 		$timeout(function() {
@@ -22,59 +23,58 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 
 	function getColorNumber(now, then) {
 		var secondsSinceMidnight = (now.getTime() - then.getTime()) / 1000;
-		return Math.round(secondsSinceMidnight % SECONDS_PER_CYCLE);
+		return Math.round((secondsSinceMidnight + 21600) % SECONDS_PER_CYCLE);
 	}
 
-	function getColorString(number) {
+	function getColorString(colorNumber) {
+		var secondsPerColor = SECONDS_PER_CYCLE / COLORS_PER_CYCLE;
+		var remainder = (colorNumber / secondsPerColor) % 256;
 		var red;
 		var green;
 		var blue;
 
-		// 1536 colors spread out over 3600 seconds (1 hour) = 2.34375 seconds per color
-		number = number / (SECONDS_PER_CYCLE / COLORS_PER_CYCLE);
-
-		switch(Math.floor(number / 256)) {
+		switch(Math.floor((colorNumber / secondsPerColor) / 256)) {
 			case 0:
-				// f00 (red)
+				// red to yellow
 				red = 256;
-				green = 0;
-				blue = 256 - (number % 256);
+				green = remainder;
+				blue = 0;
 				break;
 			case 1:
-				// ff0 (yellow)
-				red = 256;
-				green = (number % 256);
+				// yellow to green
+				red = 256 - remainder;
+				green = 256;
 				blue = 0;
 				break;
 			case 2:
-				// 0f0 (green)
-				red = 256 - (number % 256);
+				// green to teal
+				red = 0;
 				green = 256;
-				blue = 0;
+				blue = remainder;
 				break;
 			case 3:
-				// 0ff (teal)
+				// teal to blue
 				red = 0;
-				green = 256;
-				blue = number % 256;
-				break;
-			case 4:
-				// 00f (blue)
-				red = 0;
-				green = 256 - (number % 256);
+				green = 256 - remainder;
 				blue = 256;
 				break;
-			case 5:
-				// f0f (violet)
-				red = number % 256;
+			case 4:
+				// blue to violet
+				red = remainder;
 				green = 0;
 				blue = 256;
 				break;
+			case 5:
+				// violet to red
+				red = 256;
+				green = 0;
+				blue = 256 - remainder;
+				break;
 		}
 
-		red = Math.floor(red * 0.75);
-		green = Math.floor(green * 0.75);
-		blue = Math.floor(blue * 0.75);
+		red = Math.floor(red * 0.8);
+		green = Math.floor(green * 0.8);
+		blue = Math.floor(blue * 0.8);
 
 		return "rgb(" + red + ", " + green + ", " + blue + ")";
 	}
