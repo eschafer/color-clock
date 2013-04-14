@@ -8,16 +8,6 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 	// 12 hours
 	var SECONDS_PER_CYCLE = 43200;
 
-	update();
-
-	// Runs the timeout function the first time, and then runs it again
-	// each time `date` is updated.
-	$scope.$watch("date", function() {
-		$timeout(function() {
-			update();
-		}, 1000);
-	});
-
 	function update() {
 		var currentDate = new Date();
 		var colorNumber = getColorNumber(currentDate);
@@ -92,4 +82,14 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 
 		return "rgb(" + red + ", " + green + ", " + blue + ")";
 	}
+
+	update();
+
+	// Runs the timeout function the first time, and then runs it again
+	// each time `date` is updated.
+	$scope.$watch("date", function() {
+		$timeout(function() {
+			update();
+		}, 1000);
+	});
 });
