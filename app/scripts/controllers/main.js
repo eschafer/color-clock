@@ -8,7 +8,6 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 
 	$scope.date = now;
 	$scope.color = getColorString(getColorNumber(now, then));
-	console.log($scope.color);
 
 	$scope.$watch("date", function() {
 		$timeout(function() {
