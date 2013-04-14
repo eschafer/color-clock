@@ -1,1 +1,26 @@
 /* Will be compiled down to a single stylesheet with your sass files */
+
+.screen {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.clock {
+	width: 500px;
+	height: 100px;
+
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	margin: auto;
+
+	text-align: center;
+	font-size: 128px;
+	color: white;
+}

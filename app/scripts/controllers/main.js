@@ -5,18 +5,23 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 	var then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
 	$scope.date = now;
+	$scope.color = getColorString(getColorNumber(now, then));
 
 	$scope.$watch("date", function() {
 		$timeout(function() {
 			var now = new Date();
-			var colorNumber = Math.round(((now.getTime() - then.getTime()) / 1000) % 1536);
+			var colorNumber = getColorNumber(now, then);
 			var color = getColorString(colorNumber);
-			console.log(color);
 
 			$scope.date = now;
 			$scope.color = color;
 		}, 1000);
 	});
+
+	function getColorNumber(now, then) {
+		var secondsSinceMidnight = (now.getTime() - then.getTime()) / 1000;
+		return Math.round(secondsSinceMidnight % 1536)
+	}
 
 	function getColorString(number) {
 		var red;
