@@ -1,6 +1,8 @@
 "use strict";
 
 angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeout) {
+	var COLORS_PER_CYCLE = 1536;
+	var SECONDS_PER_CYCLE = 3600;
 	var now = new Date();
 	var then = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
 
@@ -20,13 +22,16 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 
 	function getColorNumber(now, then) {
 		var secondsSinceMidnight = (now.getTime() - then.getTime()) / 1000;
-		return Math.round(secondsSinceMidnight % 1536)
+		return Math.round(secondsSinceMidnight % SECONDS_PER_CYCLE);
 	}
 
 	function getColorString(number) {
 		var red;
 		var green;
 		var blue;
+
+		// 1536 colors spread out over 3600 seconds (1 hour) = 2.34375 seconds per color
+		number = number / (SECONDS_PER_CYCLE / COLORS_PER_CYCLE);
 
 		switch(Math.floor(number / 256)) {
 			case 0:
