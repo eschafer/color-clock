@@ -10,7 +10,8 @@
 
 .clock {
 	width: 500px;
-	height: 100px;
+	height: 150px;
+	line-height: 150px;
 
 	position: absolute;
 	top:0;

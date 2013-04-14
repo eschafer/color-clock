@@ -30,46 +30,46 @@ angular.module("colorClockApp").controller("MainCtrl", function ($scope, $timeou
 
 		switch(Math.floor(number / 256)) {
 			case 0:
-				// ff0000
+				// f00 (red)
 				red = 256;
 				green = 0;
 				blue = 256 - (number % 256);
 				break;
 			case 1:
-				// ffff00
+				// ff0 (yellow)
 				red = 256;
 				green = (number % 256);
 				blue = 0;
 				break;
 			case 2:
-				// 00ff00
+				// 0f0 (green)
 				red = 256 - (number % 256);
 				green = 256;
 				blue = 0;
 				break;
 			case 3:
-				// 00ffff
+				// 0ff (teal)
 				red = 0;
 				green = 256;
 				blue = number % 256;
 				break;
 			case 4:
-				// 0000ff
+				// 00f (blue)
 				red = 0;
 				green = 256 - (number % 256);
 				blue = 256;
 				break;
 			case 5:
-				// ff00ff
+				// f0f (violet)
 				red = number % 256;
 				green = 0;
 				blue = 256;
 				break;
 		}
 
-		red = Math.floor(red * 0.8);
-		green = Math.floor(green * 0.8);
-		blue = Math.floor(blue * 0.8);
+		red = Math.floor(red * 0.75);
+		green = Math.floor(green * 0.75);
+		blue = Math.floor(blue * 0.75);
 
 		return "rgb(" + red + ", " + green + ", " + blue + ")";
 	}
