@@ -1,3 +1,5 @@
 <div ng-style="{backgroundColor: color}" class="screen">
-	<div class="clock">{{date | date: "h"}}:{{date | date: "mm"}}:{{date | date: "ss"}}</div>
+	<div class="clock">
+		<span>{{date | date: "h"}}:{{date | date: "mm"}}</span>
+		<span class="ampm">{{date | date: "a"}}</span></div>
 </div>
